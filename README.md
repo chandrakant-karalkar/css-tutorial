@@ -401,7 +401,7 @@ Example of redial-gradient - By default from centre to outwards. Default shape i
 - Each property works in a different way, and positions the item with different spacing.
 - The Box model is the most commonly used way to position items.
 
-[Box Model](img/box-model.jpg)
+![Box Model](img/box-model.jpg)
  
 Padding: represent the space between the content and the border. Give more room around the content.
 Border : is the divider between the padding and the margin. It can be styled using a CSS property called `border`.
@@ -410,7 +410,195 @@ Margin : is the space between border and all other surrounding items/content.
 Padding is used for internal space, while margin is used for external space.
 
 #Changing Content Size:
- 
-  
+//TODO:
 
+#CSS Flow Layout
+
+Normal Flow, of Flow Layout, is the way that Block and inline elements are displayed on a page before any changes are made to their layout.
+The flow is essentially a set of things that are all working together and know about each other in your layout. Once something is taken out of flow it works independently.
+
+In normal flow *Inline* elements display in the inline direction, that is in the direction words are displayed in a sentence according to the writing Mode of the  document. If there is not enough space in the containing block for all of the boxes a box can break onto a new line.
+*Block* elements display one after other, as paragraphs do in the Writing Mode of the document. In English therefore, inline elements display one after the other, starting from left to right,
+and block elements start at the top and move down the page.
+
+Example - 
+The following example demonstrates Block and inline Level boxes. The two paragraph elements wit a green border are Block level, displaying one under the other.
+
+Tge first sentence also includes a span element with a blue background, This is inline level therefore displays in place in the sentence.
+
+![Block-Inline Flow](img/normal-flow.jpg)
+
+```css
+    p {
+        border: 2px solid green;
+    }
+    span {
+        background-color: lightblue;
+    }
+```
+  
+```html
+<div class="box">
+    <p>One <span>November</span> night in the year 1782, so the story runs, two brothers sat over their winter fire in the little French town of Annonay, watching the grey smoke-wreaths from the hearth curl up the wide chimney. Their names were Stephen and Joseph Montgolfier, they were papermakers by trade, and were noted as possessing thoughtful minds and a deep interest in all scientific knowledge and new discovery.</p>
+    <p>Before that night—a memorable night, as it was to prove—hundreds of millions of people had watched the rising smoke-wreaths of their fires without drawing any special inspiration from the fact.”</p>
+</div>
+```  
+
+By default block elements will consume all of the space in the inline direction, so our paragraphs spread out and get as big as they can inside their containing block. If we give them a width, they will continue to lay out one below the other - even if there would be space for them to be side by side. Each will start against the start edge of the containing block, so the place at which sentences would begin in that writing mode.
+
+![width](img/normal-flow-width.jpg)
+
+```css
+    p {
+        border: 2px solid green;
+        width: 40%;
+    }
+```
+
+#Margin collapse
+The spec explains that margins between block elements collapse. This means that if you have an element with a top margin immediately after an element with a bottom margin, rather than the total space being the sum of these two margins, the margin collapses, and so will essentially become as large as the larger of the two margins.
+
+[Further Reading](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing)
+
+#Elements participating in an inline formatting context
+
+Inline elements display one after the other in the direction that sentences run in that particular writing mode. While we don’t tend to think of inline elements as having a box, as with everything in CSS they do. These inline boxes are arranged one after the other. If there is not enough space in the containing block for all of the boxes a box can break onto a new line. The lines created are known as line boxes.
+
+In the following example, we have three inline boxes created by a paragraph with a `<strong>` element inside it.
+
+![inline-box](img/inline-boxes.jpg)
+
+```html
+    <p>Before that night—<strong>a memorable night</strong>, as it was to prove—hundreds of millions of people had 
+    watched the rising smoke-wreaths of their fires without drawing any special inspiration from the fact.”</p>
+```
+
+The boxes around the words before the `<strong>` element and after the `<strong>` element are referred to as anonymous boxes, 
+boxes introduced to ensure that everything is wrapped in a box, but ones that we cannot target directly.
+
+The line box size in the block direction (so the height when working in English) is defined by the tallest box inside it. In the next example, 
+I have made the `<strong>` element 300%; that content now defines the height of the line box on that line.
+
+![inline-box2](img/line-boxes2.jpg)
+
+```css
+    strong {
+        font-size: 300%;
+    }
+```
+
+```html
+    <p>Before that night—<strong>a memorable night</strong>, as it was to 
+    prove—hundreds of millions of people had watched the rising smoke-wreaths of their fires 
+    without drawing any special inspiration from the fact.”</p>
+```
+
+#The display property
+
+The `display` property defines how a box and any boxes inside it behave.
+The `display` CSS property sets whether an element is treated as a block or inline element and the layout used for its children, 
+such as flow layout, grid or flex.
+
+Formally, the `display` property sets an element's inner and outer display types. The outer type sets an element's participation in flow layout; the inner type sets the layout of children. Some values of display 
+are fully defined in their own individual specifications; for example `display: flex`
+
+Allowed Values:
+```css
+    div {
+    /* legacy values */
+    display: block;
+    display: inline;
+    display: inline-block;
+    display: flex;
+    display: inline-flex;
+    display: grid;
+    display: inline-grid;
+    display: flow-root;
+    
+    /* box generation */
+    display: none;
+    display: contents;
+    
+    /* two-value syntax */
+    display: block flow;
+    display: inline flow;
+    display: inline flow-root;
+    display: block flex;
+    display: inline-flex;
+    display: block grid;
+    display: inline grid;
+    display: block flow-root;
+    
+    /* other values */
+    display: table;
+    display: table-row; /* all table elements have an equivalent CSS display value */
+    display: list-item;
+    
+    /* Global values */
+    display: inherit;
+    display: initial;
+    display: unset;
+    }
+```
+
+[Further Reading](https://developer.mozilla.org/en-US/docs/Web/CSS/display)
+
+#The position property:
+
+The position CSS property sets how an element is positioned in a document. 
+The top, right, bottom, and left properties determine the final location of positioned elements.
+
+   | A **positioned** element is an element whose computed position value is either relative, absolute, fixed, or sticky. (In other words, it's anything except static.)
+
+Values:
+
+1. **static**
+
+    The element is positioned according to the normal flow of the document. The top, right, bottom, left, and z-index properties have no effect. This is the default value.
+
+2. **relative**
+    
+    The element is positioned according to the normal flow of the document, and then offset relative to itself based on the values of top, right, bottom, and left. The offset does not affect the position of any other elements; thus, the space given for the element in the page layout is the same as if position were static.
+    
+    [Fiddle](https://jsfiddle.net/chandu4u2/aotzr3me/)
+    
+    Relatively positioned elements are offset a given amount from their normal position within the document, but without the offset affecting other elements. In the example below, note how the other elements are placed as if "Two" were taking up the space of its normal location.
+    
+3. **absolute**
+
+    The element is removed from the normal document flow, and no space is created for the element in the page layout. It is positioned relative to its closest positioned ancestor, if any; otherwise, it is placed relative to the initial containing block. Its final position is determined by the values of top, right, bottom, and left.
+    
+    *Note: This value creates a new stacking context when the value of z-index is not auto. The margins of absolutely positioned boxes do not collapse with other margins.
+    
+    [Fiddle](https://jsfiddle.net/chandu4u2/khnb0815/)
+    
+    Elements that are relatively positioned remain in the normal flow of the document. In contrast, an element that is absolutely positioned is taken out of the flow; 
+    thus, other elements are positioned as if it did not exist. The absolutely positioned element is positioned relative to its nearest positioned ancestor 
+    (i.e., the nearest ancestor that is not static). If a positioned ancestor doesn't exist, it is positioned relative to the ICB (initial containing block),
+     which is the containing block of the document's root element.
+     
+4. **fixed**
+
+    The element is removed from the normal document flow, and no space is created for the element in the page layout. It is positioned relative to the initial containing block established by the viewport
+    Its final position is determined by the values of top, right, bottom, and left.
+    
+    Fixed positioning is similar to absolute positioning, with the exception that the element's containing block is the initial containing block established by the viewport
+    
+    This can be used to create a "floating" element that stays in the same position regardless of scrolling. In the example below, box "One" is fixed at 80 pixels from the top of the page and 10 pixels from the left. Even after scrolling, it remains in the same place relative to the viewport.
+    
+    [Fiddle](https://jsfiddle.net/chandu4u2/u5oy6raz/)
+    
+ 6. **sticky**
+ 
+    The element is positioned according to the normal flow of the document, and then offset relative to its nearest scrolling ancestor and containing block (nearest block-level ancestor), including table-related elements, based on the values of top, right, bottom, and left. The offset does not affect the position of any other elements.
+    
+    Sticky positioning can be thought of as a hybrid of relative and fixed positioning. A stickily positioned element is treated as relatively positioned until it crosses a specified threshold, at which point it is treated as fixed until it reaches the boundary of its parent. 
+    
+    A common use for sticky positioning is for the headings in an alphabetized list. The "B" heading will appear just below the items that begin with "A" until they are scrolled offscreen. Rather than sliding offscreen with the rest of the content, the "B" heading will then remain fixed to the top of the viewport until all the "B" items have scrolled offscreen, at which point it will be covered up by the "C" heading, and so on.
+    
+    You must specify a threshold with at least one of top, right, bottom, or left for sticky positioning to behave as expected. Otherwise, it will be indistinguishable from relative positioning.
+    
+    [Fiddle](https://jsfiddle.net/chandu4u2/cmL2193v/)
+    
+    
 
