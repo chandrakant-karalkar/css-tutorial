@@ -301,6 +301,11 @@ The CSS attribute selector matches elements based on the presence or value of a 
           padding: 2px;
         }
    ```
+[attribute~="value"]<br>
+The example above will match elements with title="flower", title="summer flower", and title="flower new", but not title="my-flower" or title="flowers".
+<br>[attribute*="value"]<br>
+Note: The value does not have to be a whole word! 
+   
 # Colors 
 1. CSS color names (Named colors) - red, blue etc.
 2. Hex color codes - Starts with # tag and takes 6 Hex-numbers. First 2 digits represents number of red in the color and subsequent pair of 2 represent green and blue respectively.
