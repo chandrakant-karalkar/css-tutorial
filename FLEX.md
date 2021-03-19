@@ -257,6 +257,9 @@ Please see the [align-items](#align-items) explanation to understand the availab
 
 # Useful Links:
 https://www.sketchingwithcss.com/samplechapter/cheatsheet.html
+
 https://css-tricks.com/flex-grow-is-weird/
+
 https://css-tricks.com/how-auto-margins-work-in-flexbox/
+
 
